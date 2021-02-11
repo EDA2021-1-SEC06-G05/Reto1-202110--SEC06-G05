@@ -1,3 +1,8 @@
+Req. 2 - David Santiago Lopez Velez, 201814056, ds.lopezv@uniandes.edu.co
+
+Req. 3 - Andres Camilo Llanos Jurado, 201716506, ac.llanos@uniandes.edu.co
+
+
 #ISIS1225 - Librerias de soporte
 
 Este proyecto contiene los Tipos abstractos de datos, estructuras de datos y algoritmos requeridos por el curso ISIS1225-Estructuras de Datos y Algoritmos
