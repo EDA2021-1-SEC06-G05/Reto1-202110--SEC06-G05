@@ -37,7 +37,7 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
-    print("2- Consultar el top n de tendencias por categoria y pais")
+    print("2- Consultar el TOP n de tendencias por categoria y pais")
 
 def initCatalog():
      """
@@ -64,11 +64,13 @@ while True:
         catalog = initCatalog()
         loadData(catalog)
         print('Videos cargados:' + str(lt.size(catalog['videos'])))
-        print('Canales cargados')
+        print('Canales cargados' + str(lt.size(catalog['channel_title'])))
         print('Paises cargados')
         print('Categorias cargadas' + str(lt.size(catalog['category-id'])))
     elif int(inputs[0]) == 2:
-        number = input("")
+        number = input("Buscando los TOP ?:")
+        videos = controller.getBestVideos(catalog, int(number))
+        printBestVideos(videos)
 
     else:
         sys.exit(0)
