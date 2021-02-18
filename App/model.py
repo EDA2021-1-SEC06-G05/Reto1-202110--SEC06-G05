@@ -34,10 +34,22 @@ assert cf
 Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
 los mismos.
 """
+def newCatalog()
+    catalog= {'videos': none, 'categoria':none}
+    catalog['videos'] = lt.newList()
+    catalog['categoria'] = lt.newList('ARRAY_LIST', cmpfunction=comparecategorias)
+    return catalog
+    
 
 # Construccion de modelos
 
 # Funciones para agregar informacion al catalogo
+def addVideo(catalog, video):
+    lt.addLast(catalog['videos'], video)
+    categoria = video['categoria'].split(",")
+    for categoria in categorias:
+        addVideoCategoria(catalog, categoria.strip(), video)
+
 
 # Funciones para creacion de datos
 
