@@ -38,6 +38,7 @@ def printMenu():
     print("Bienvenido")
     print("1- Cargar información en el catálogo")
     print("2- Consultar el TOP n de tendencias por categoria y pais")
+    print("0- Salir")
 
 def initCatalog():
      """
@@ -51,6 +52,18 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
+def printBestVideos(videos):
+    size = lt.size(videos)
+    if size:
+        print(' Estos son los mejores videos:')
+        for video in lt.iterator(videos):
+            print('Titulo:' + video['title'] + 'Fecha de tendencia:' + video['trending_date'] + 
+                  'Nombre del canal:' + video['channel_title'] + 'Fecha de publicacion:' + 
+                  video['publish_time'] + 'Reproducciones:' + video['views'] + 'Likes:' + 
+                  video['likes'] + 'Dislikes:' + video['dislikes'] )
+    else:
+        print('No se encontraron videos')        
+              
 catalog = None
 
 """
@@ -64,9 +77,9 @@ while True:
         catalog = initCatalog()
         loadData(catalog)
         print('Videos cargados:' + str(lt.size(catalog['videos'])))
-        print('Canales cargados' + str(lt.size(catalog['channel_title'])))
-        print('Paises cargados')
-        print('Categorias cargadas' + str(lt.size(catalog['category-id'])))
+        print('Canales cargados' + str(lt.size(catalog['channel'])))
+        print('Paises cargados' + str(lt.size(catalog['country'])))
+        print('Categorias cargadas' + str(lt.size(catalog['category'])))
     elif int(inputs[0]) == 2:
         number = input("Buscando los TOP ?:")
         videos = controller.getBestVideos(catalog, int(number))
