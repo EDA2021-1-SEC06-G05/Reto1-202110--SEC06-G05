@@ -52,6 +52,16 @@ def loadData(catalog):
     """
     controller.loadData(catalog)
 
+def printCategoryData(category):
+    if category:
+        print('categoria encontrada:' + category['name'])
+        print('Reproducciones' + str(category['views']))
+        print('Total de videos:' + str(lt.size(category['videos'])))
+        for videos in lt.iterator(category['videos']):
+            print('Titulo:' + video['title'] + 'Nombre del canal:' + video['channel_title'])
+        else:
+            print('No se encontro la categoria')
+
 def printBestVideos(videos):
     size = lt.size(videos)
     if size:
@@ -63,7 +73,7 @@ def printBestVideos(videos):
                   video['likes'] + 'Dislikes:' + video['dislikes'] )
     else:
         print('No se encontraron videos')        
-              
+
 catalog = None
 
 """

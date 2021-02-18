@@ -54,7 +54,7 @@ def addVideo(catalog, video):
     lt.addLast(catalog['videos'], video)
     categorias = video['categorias'].split(",")
     for category in categorias:
-        addVideoCategory(catalog, category.strip(), video)
+        addCategory(catalog, category.strip(), video)
 
 def addCategory(catalog, categoria, video):
 
@@ -65,17 +65,16 @@ def addCategory(catalog, categoria, video):
     else:
         category = newCategory(categoria)
         lt.addLast(categorias, category)
-
     lt.addLast(category['videos'], video)
 
 
 # Funciones para creacion de datos
 
-def newCategory(name, id):
+def newCategory(name):
 
-    category = {'name': '', 'id': ''}
-    category['name'] =name
-    category['id'] = id
+    category = {'name': "", "videos": None, "views": 0}
+    category['name'] = name
+    category['videos'] = lt.newList('ARRAY_LIST')
     return category
 
 # Funciones de consulta
@@ -107,7 +106,7 @@ def comparecategory(categoria1, category):
     if(categoria1.lower() in category['name'].lower()):
         return 0
     return -1
-    
+
 # Funciones de ordenamiento
 
 def sortVideos(catalog):
