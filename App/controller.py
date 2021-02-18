@@ -64,15 +64,16 @@ def loadCategory(catalog):
 
 # Funciones de ordenamiento
 
-def sortVideos(catalog)
+def sortVideos(catalog):
 
     model.sortVideos(catalog)
 
 # Funciones de consulta sobre el catálogo
 
-def countVideosByCategory(catalog, category):
+def getVideosByCategory(catalog, categoria):
 
-    return model.countVideosByCategory(catalog, category)
+    category = model.getVideosByCategory(catalog, categoria)
+    return category
 
 def getBestVideos(catalog, number):
 
