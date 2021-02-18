@@ -80,8 +80,3 @@ def getBestVideos(catalog, number):
     bestvideos = model.getBestVideos(catalog, number)
     return bestvideos
 
-def getVideosByCountry(catalog, country):
-
-    pais = model.getVideosByCountry(catalog, country)
-    return pais
-

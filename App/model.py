@@ -39,8 +39,7 @@ los mismos.
 def newCatalog():
 
     catalog= {'videos': None, 
-              'category': None, 
-              'country': None}
+              'category': None}
 
     catalog['videos'] = lt.newList()
     catalog['category'] = lt.newList('ARRAY_LIST',
@@ -56,7 +55,7 @@ def addVideo(catalog, video):
     for category in categorias:
         addCategory(catalog, category.strip(), video)
 
-def addCategory(catalog, categoria, video):
+def addCategory(catalog, categoria):
 
     categorias = catalog['categorias']
     poscategory = lt.isPresent(categorias, categoria)
@@ -65,7 +64,7 @@ def addCategory(catalog, categoria, video):
     else:
         category = newCategory(categoria)
         lt.addLast(categorias, category)
-    lt.addLast(category['videos'], video)
+    lt.addLast(category['videos'], categoria)
 
 
 # Funciones para creacion de datos
