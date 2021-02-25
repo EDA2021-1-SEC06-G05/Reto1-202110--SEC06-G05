@@ -105,6 +105,18 @@ def comparecategory(categoria1, category):
     if(categoria1.lower() in category['name'].lower()):
         return 0
     return -1
+def cmpVideosByViews(video1, video2):
+    
+    """
+    Devuelve verdadero (True) si los 'views' de video1 son menores que los del video2
+    Args:
+    video1: informacion del primer video que incluye su valor 'views'
+    video2: informacion del segundo video que incluye su valor 'views'
+    """
+    views1 = false
+    if float(video1['views']) < float(video2['views']))
+        views1 = True
+    return views1   
 
 # Funciones de ordenamiento
 
