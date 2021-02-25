@@ -36,18 +36,18 @@ operación solicitada
 
 def printMenu():
     print("Bienvenido")
-    print("1- Cargar información en el catálogo")
+    print("1-  seleccionar el tipo de representación de la lista")
     print("2- Consultar el TOP n de tendencias por categoria y pais")
     print("0- Salir")
 
 def initCatalog():
-     """
+    """
     Inicializa el catalogo de libros
     """
     return controller.initCatalog()
 
 def loadData(catalog):
-     """
+    """
     Carga los libros en la estructura de datos
     """
     controller.loadData(catalog)
@@ -83,6 +83,24 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
+        size = input('(1) para ARRAY_LIST o (2) para LINKED_LIST\n : ')
+        if int(size[0])==1:
+            print("Cargando información de los archivos en ARRAY_LIST....")
+            catalog = initCatalog()
+            loadData(catalog)
+            print('Videos cargados:' + str(lt.size(catalog['videos'])))
+            print('Canales cargados' + str(lt.size(catalog['channel'])))
+            print('Paises cargados' + str(lt.size(catalog['country'])))
+            print('Categorias cargadas' + str(lt.size(catalog['category'])))
+        elif int(size[0])==2:    
+            print("Cargando informacion de los archivos en LINKED_LIST")
+
+
+
+        result = controller.sortBooks(catalog, int(size))
+        print("Para la muestra de", size, " elementos, el tiempo (mseg) es: ", str(result[0]))
+        printResults(result[1])
+    elif int(inputs[0]) == 2:
         print("Cargando información de los archivos ....")
         catalog = initCatalog()
         loadData(catalog)
@@ -90,7 +108,7 @@ while True:
         print('Canales cargados' + str(lt.size(catalog['channel'])))
         print('Paises cargados' + str(lt.size(catalog['country'])))
         print('Categorias cargadas' + str(lt.size(catalog['category'])))
-    elif int(inputs[0]) == 2:
+    elif int(inputs[0]) == 3:
         number = input("Buscando los TOP ?:")
         videos = controller.getBestVideos(catalog, int(number))
         printBestVideos(videos)
