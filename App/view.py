@@ -37,7 +37,8 @@ operación solicitada
 def printMenu():
     print("Bienvenido")
     print("1- Seleccionar el tipo de representación de la lista")
-    print("2- Consultar el TOP n de tendencias por categoria y pais")
+    print("2- Seleccione el tipo de algoritmo de ordenamiento iterativo")
+    print("3- Consultar el TOP n de tendencias por categoria y pais")
     print("0- Salir")
 
 def initCatalog():
