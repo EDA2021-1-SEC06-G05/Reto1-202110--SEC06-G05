@@ -113,8 +113,8 @@ def cmpVideosByViews(video1, video2):
     video1: informacion del primer video que incluye su valor 'views'
     video2: informacion del segundo video que incluye su valor 'views'
     """
-    views1 = false
-    if float(video1['views']) < float(video2['views']))
+    views1 = False
+    if (float(video2['views'])) > (float(video1['views'])):
         views1 = True
     return views1   
 

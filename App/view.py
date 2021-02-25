@@ -36,7 +36,7 @@ operación solicitada
 
 def printMenu():
     print("Bienvenido")
-    print("1-  seleccionar el tipo de representación de la lista")
+    print("1- seleccionar el tipo de representación de la lista")
     print("2- Consultar el TOP n de tendencias por categoria y pais")
     print("0- Salir")
 
@@ -112,7 +112,6 @@ while True:
         number = input("Buscando los TOP ?:")
         videos = controller.getBestVideos(catalog, int(number))
         printBestVideos(videos)
-
     else:
         sys.exit(0)
 sys.exit(0)
