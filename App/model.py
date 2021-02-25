@@ -120,6 +120,26 @@ def cmpVideosByViews(video1, video2):
 
 # Funciones de ordenamiento
 
+def subList(lst, pos, numelem):
+    """ Retorna una sublista de la lista lst.
+
+    Se retorna una lista que contiene los elementos a partir de la
+    posicion pos, con una longitud de numelem elementos.
+    Se crea una copia de dichos elementos y se retorna una lista nueva.
+
+    Args:
+        lst: La lista a examinar
+        pos: Posición a partir de la que se desea obtener la sublista
+        numelem: Numero de elementos a copiar en la sublista
+
+    Raises:
+        Exception
+    """
+    try:
+        return lt.subList(lst, pos, numelem)
+    except Exception as exp:
+        error.reraise(exp, 'List->subList: ')
+
 def sortVideos(catalog):
     sa.sort(catalog['videos'], compareviews)
 
@@ -137,7 +157,7 @@ def sort(lst, cmpfunction):
         lt.exchange(lst, pos1, minimum)  # elemento más pequeño -> elem pos1
         pos1 += 1
     return lst
-    
+
 def insertionVideos(lst, lessfunction):
     size = lt.size(lst)
     pos1 = 1
