@@ -36,7 +36,7 @@ operación solicitada
 
 def printMenu():
     print("Bienvenido")
-    print("1- seleccionar el tipo de representación de la lista")
+    print("1- Seleccionar el tipo de representación de la lista")
     print("2- Consultar el TOP n de tendencias por categoria y pais")
     print("0- Salir")
 

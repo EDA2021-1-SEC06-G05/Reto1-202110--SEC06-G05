@@ -122,3 +122,29 @@ def cmpVideosByViews(video1, video2):
 
 def sortVideos(catalog):
     sa.sort(catalog['videos'], compareviews)
+
+def insertionVideos(lst, lessfunction):
+    size = lt.size(lst)
+    pos1 = 1
+    while pos1 <= size:
+        pos2 =pos1
+        while (pos2 > 1) and (lessfunction(lt.getElement(lst, pos2), lt.getElement(lst, pos2-1))):
+            lt.exchange(lst, pos2, pos2-1)
+            pos2 -=1
+        pos1 +=1
+    return lst
+
+def shellVideos(lst, lessfunction):
+    n = lt.size(lst)
+    h = 1
+    while h < n/3:
+        h = 3*h + 1
+    while(h >= 1):
+        for i in range(h,n):
+            j = i
+            while (j >= h) and (lessfunction(lt.getElement(lst, j+1), lt.getElement(lst, j-h+1))):
+                lt.exchange(lst, j+1, j-h+1)
+                j -= h
+        h //=3
+    return lst
+
