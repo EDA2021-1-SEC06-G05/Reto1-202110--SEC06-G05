@@ -27,7 +27,11 @@
 
 import config as cf
 from DISClib.ADT import list as lt
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import shellsort as shell
+from DISClib.Algorithms.Sorting import selectionsort as sel
+from DISClib.Algorithms.Sorting import insertionsort as ins
+from DISClib.Algorithms.Sorting import mergesort as merge
+from DISClib.Algorithms.Sorting import quicksort as quick
 assert cf
 
 """
@@ -36,14 +40,14 @@ los mismos.
 """
 # Construccion de modelos
 
-def newCatalog():
+def newCatalog(tipoEstructura):
 
-    catalog= {'videos': None, 
-              'category': None}
+    catalog= {'videos': None, 'category': None, "views": None}
 
-    catalog['videos'] = lt.newList()
-    catalog['category'] = lt.newList('ARRAY_LIST',
-                                     cmpfunction=comparecategory)
+    catalog['videos'] = lt.newList(datastructure=tipoEstructura)
+    catalog['category'] = lt.newList(datastructure=tipoEstructura)
+    catalog["views"] = lt.newList(datastructure= tipoEstructura, cmpfunction= cmpVideosByViews)
+
     return catalog
     
 # Funciones para agregar informacion al catalogo
@@ -51,20 +55,12 @@ def newCatalog():
 def addVideo(catalog, video):
 
     lt.addLast(catalog['videos'], video)
-    categorias = video['categorias'].split(",")
-    for category in categorias:
-        addCategory(catalog, category.strip(), video)
+    lt.addLast(catalog["views"],video)    
 
 def addCategory(catalog, categoria):
 
-    categorias = catalog['categorias']
-    poscategory = lt.isPresent(categorias, categoria)
-    if poscategory > 0:
-        category = lt.getElement(categorias, poscategory)
-    else:
-        category = newCategory(categoria)
-        lt.addLast(categorias, category)
-    lt.addLast(category['videos'], categoria)
+    categorias = catalog["category"] 
+    lt.addLast(categorias, categoria) 
 
 
 # Funciones para creacion de datos
@@ -77,6 +73,10 @@ def newCategory(name):
     return category
 
 # Funciones de consulta
+def crearSubLista(catalog, muestra):
+    nuevaLista = lt.subList(catalog["videos"], 1, muestra)
+
+    return nuevaLista
 
 def getVideosByCategory(catalog, categoria):
 
@@ -105,6 +105,7 @@ def comparecategory(categoria1, category):
     if(categoria1.lower() in category['name'].lower()):
         return 0
     return -1
+
 def cmpVideosByViews(video1, video2):
     
     """
@@ -114,6 +115,7 @@ def cmpVideosByViews(video1, video2):
     video2: informacion del segundo video que incluye su valor 'views'
     """
     views1 = False
+    print(float(video2['views']), float(video1['views']))
     if (float(video2['views'])) > (float(video1['views'])):
         views1 = True
     return views1   
@@ -121,6 +123,7 @@ def cmpVideosByViews(video1, video2):
 # Funciones de ordenamiento
 
 def subList(lst, pos, numelem):
+    
     """ Retorna una sublista de la lista lst.
 
     Se retorna una lista que contiene los elementos a partir de la
@@ -143,43 +146,17 @@ def subList(lst, pos, numelem):
 def sortVideos(catalog):
     sa.sort(catalog['videos'], compareviews)
 
-def sort(lst, cmpfunction):
-    size = lt.size(lst)
-    pos1 = 1
-    while pos1 < size:
-        minimum = pos1    # minimun tiene el menor elemento
-        pos2 = pos1 + 1
-        while (pos2 <= size):
-            if (cmpfunction(lt.getElement(lst, pos2),
-               (lt.getElement(lst, minimum)))):
-                minimum = pos2  # minimum = posición elemento más pequeño
-            pos2 += 1
-        lt.exchange(lst, pos1, minimum)  # elemento más pequeño -> elem pos1
-        pos1 += 1
-    return lst
+def selectionVideos(catalog):
+    sel.sort(catalog['videos'], compareviews)
+    
+def insertionVideos(catalog):    
+    ins.sort(catalog["videos"], compareviews)
 
-def insertionVideos(lst, lessfunction):
-    size = lt.size(lst)
-    pos1 = 1
-    while pos1 <= size:
-        pos2 =pos1
-        while (pos2 > 1) and (lessfunction(lt.getElement(lst, pos2), lt.getElement(lst, pos2-1))):
-            lt.exchange(lst, pos2, pos2-1)
-            pos2 -=1
-        pos1 +=1
-    return lst
+def shellVideos(catalog):
+    shell.sort(catalog["videos"],compareviews)
 
-def shellVideos(lst, lessfunction):
-    n = lt.size(lst)
-    h = 1
-    while h < n/3:
-        h = 3*h + 1
-    while(h >= 1):
-        for i in range(h,n):
-            j = i
-            while (j >= h) and (lessfunction(lt.getElement(lst, j+1), lt.getElement(lst, j-h+1))):
-                lt.exchange(lst, j+1, j-h+1)
-                j -= h
-        h //=3
-    return lst
+def quickVideos(catalog):
+    quick.sort(catalog["videos"],compareviews)
 
+def mergeVideos(catalog):
+    merge.sort(catalog["videos"], compareviews)
