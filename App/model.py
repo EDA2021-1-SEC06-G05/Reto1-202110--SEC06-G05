@@ -26,6 +26,7 @@
 
 
 import config as cf
+import operator 
 from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as shell
 from DISClib.Algorithms.Sorting import selectionsort as sel
@@ -41,24 +42,22 @@ los mismos.
 # Construccion de modelos
 
 def newCatalog(tipoEstructura):
-
-    catalog= {'videos': None, 'category': None, "views": None}
+    catalog= {'videos': None, 'category': None, "views": None, "title": None}
 
     catalog['videos'] = lt.newList(datastructure=tipoEstructura)
     catalog['category'] = lt.newList(datastructure=tipoEstructura)
     catalog["views"] = lt.newList(datastructure= tipoEstructura, cmpfunction= cmpVideosByViews)
-
+    catalog["title"] = lt.newList(datastructure= tipoEstructura)
     return catalog
     
 # Funciones para agregar informacion al catalogo
 
 def addVideo(catalog, video):
-
     lt.addLast(catalog['videos'], video)
     lt.addLast(catalog["views"],video)    
+    lt.addLast(catalog["title"], video)
 
 def addCategory(catalog, categoria):
-
     categorias = catalog["category"] 
     lt.addLast(categorias, categoria) 
 
@@ -66,7 +65,6 @@ def addCategory(catalog, categoria):
 # Funciones para creacion de datos
 
 def newCategory(name):
-
     category = {'name': "", "videos": None, "views": 0}
     category['name'] = name
     category['videos'] = lt.newList('ARRAY_LIST')
@@ -78,16 +76,32 @@ def crearSubLista(catalog, muestra):
 
     return nuevaLista
 
+def crearSubLista2(catalog, muestra):
+    nuevaLista2 = lt.subList(catalog["category"], 1, muestra)
+    return nuevaLista2
+
+def ejemplo(catalog, muestra):
+    ejemplo = lt.subList(catalog["title"], 1, muestra)
+    return ejemplo
+
+def req4(pais, idCategoria, catalog):
+    nuevaListaVideos = catalog["videos"]
+    listaFinal = lt.newList()
+    for i in range (1, lt.size(nuevaListaVideos)):
+        video = lt.getElement(nuevaListaVideos, i)
+        if(video["category_id"] == idCategoria and video["country"] == pais):
+            lt.addLast(listaFinal, video)
+    return listaFinal
+
 def getVideosByCategory(catalog, categoria):
 
-    poscategory = lt.isPresent(catalog['categorias'], categoria)
+    poscategory = lt.isPresent(catalog['category'], categoria)
     if poscategory > 0:
-        category = lt.getElement(catalog['categorias'], poscategory)
+        category = lt.getElement(catalog['category'], poscategory)
         return category
     return None
 
 def getBestVideos(catalog, number):
-
     videos = catalog['videos']
     bestvideos = lt.newList()
     for cont in range(1, number+1):
@@ -97,8 +111,60 @@ def getBestVideos(catalog, number):
 
 # Funciones utilizadas para comparar elementos dentro de una lista
 
+def estudianteA(catalog, pais):
+    listaVideos = catalog["videos"]
+    dicRes = {}
+    for i in range (1, lt.size(listaVideos)): 
+        video = lt.getElement(listaVideos, i)
+        if(pais == video["country"]):
+            if (video["title"] in dicRes):
+                dicRes[video["title"]]+=1 
+            else:
+                dicRes[video["title"]]=1    
+    sortVideos = sorted(dicRes.items(), key= operator.itemgetter(1), reverse= True)
+    trendingVideo = sortVideos[0][0]
+    contadorDias = sortVideos[0][1]
+    for i in range (1, lt.size(listaVideos)):
+        video = lt.getElement(listaVideos, i)
+        if(trendingVideo == video["title"]):
+
+            return video, contadorDias
+
+def estudianteB(catalog, idCategoria):
+    listaVideos = catalog["videos"]
+    dicRes = {}
+    for i in range (1, lt.size(listaVideos)): 
+        video = lt.getElement(listaVideos, i)
+        if(idCategoria == video["category_id"]):
+            if (video["title"] in dicRes):
+                dicRes[video["title"]]+=1 
+            else:
+                dicRes[video["title"]]=1    
+    sortVideos = sorted(dicRes.items(), key= operator.itemgetter(1), reverse= True)
+    trendingVideo = sortVideos[0][0]
+    contadorDias = sortVideos[0][1]
+    for i in range (1, lt.size(listaVideos)):
+        video = lt.getElement(listaVideos, i)
+        if(trendingVideo == video["title"]):
+
+            return video, contadorDias
+
 def compareviews(video1, video2):
     return (float(video1['views']) > float(video2['views']))
+
+
+def comparelikes(video1, video2):
+    return (float(video1['likes']) > float(video2['likes']))
+ 
+
+def req10(catalog, numeroVideos, pais, tag):
+    nueva = lt.newList()
+    nueva.shellVideosLikes(catalog)
+    for i in range (1, lt.size(nueva)):
+        video = lt.getElement(nueva, i)
+        if(pais == video["country"] and "" ""+tag+"" "" in video['tags'].split('|')):
+            lt.addLast(nueva, video)
+    return nueva(catalog, numeroVideos, pais, tag)      
 
 def comparecategory(categoria1, category):
 
@@ -123,7 +189,6 @@ def cmpVideosByViews(video1, video2):
 # Funciones de ordenamiento
 
 def subList(lst, pos, numelem):
-    
     """ Retorna una sublista de la lista lst.
 
     Se retorna una lista que contiene los elementos a partir de la
@@ -146,6 +211,9 @@ def subList(lst, pos, numelem):
 def sortVideos(catalog):
     sa.sort(catalog['videos'], compareviews)
 
+def sortVideosLikes(catalog):
+    sa.sort(catalog["videos"],comparelikes)
+    
 def selectionVideos(catalog):
     sel.sort(catalog['videos'], compareviews)
     
@@ -153,10 +221,13 @@ def insertionVideos(catalog):
     ins.sort(catalog["videos"], compareviews)
 
 def shellVideos(catalog):
-    shell.sort(catalog["videos"],compareviews)
+    shell.sort(catalog, compareviews)
+
+def shellVideosLikes(catalog):
+    shell.sort(catalog["videos"], comparelikes)
 
 def quickVideos(catalog):
     quick.sort(catalog["videos"],compareviews)
 
 def mergeVideos(catalog):
-    merge.sort(catalog["videos"], compareviews)
+    merge.sort(catalog["videos"], compareviews)    

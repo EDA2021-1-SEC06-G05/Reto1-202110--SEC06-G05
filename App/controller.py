@@ -39,9 +39,30 @@ def initCatalog(parametro):
     return catalog
 
 # Funciones para la carga de datos
+
 def crearSubLista(catalog, muestra):
     nuevaLista = model.crearSubLista(catalog, muestra)
     return nuevaLista
+
+def req4( pais, idCategoria, catalog):
+    return model.req4( pais, idCategoria, catalog)
+
+def req10(catalog, numeroVideos, pais, tag):
+    return model.req10(catalog, numeroVideos, pais, tag)
+
+def estudianteA(catalog, pais):
+    return model.estudianteA(catalog,pais)
+
+def estudianteB(catalog, idCategoria):
+    return model.estudianteB(catalog, idCategoria) 
+
+def crearSubLista2(catalog, muestra):
+    nuevaLista2 = model.crearSubLista2(catalog, muestra)
+    return nuevaLista2
+
+def ejemplo(catalog, muestra):
+    nejemplo = model.ejemplo(catalog, muestra)
+    return nejemplo
 
 def loadData(catalog):
     """
@@ -52,44 +73,39 @@ def loadData(catalog):
     loadCategory(catalog)
 
 def loadVideos(catalog):
-
-    videosfile = cf.data_dir + 'videos/videos-50pct.csv'
+    videosfile = cf.data_dir + 'videos-small.csv'
     input_file = csv.DictReader(open(videosfile, encoding='utf-8'))
     for video in input_file:
         model.addVideo(catalog, video)
 
 def loadCategory(catalog):
-
-    categoryfile = cf.data_dir + 'videos/category-id.csv'
-    input_file = csv.DictReader(open(categoryfile, encoding='utf-8'))
+    categoryfile = cf.data_dir + 'category-id.csv'
+    dialect= csv.excel()
+    dialect.delimiter="\t"
+    input_file = csv.DictReader(open(categoryfile, encoding='utf-8'), dialect= dialect)
     for category in input_file:
         model.addCategory(catalog, category) 
 
 # Funciones de ordenamiento
 
 def sortVideos(catalog):
-
     model.sortVideos(catalog)
 
 def selectionVideos(catalog):
-    
     model.selectionVideos(catalog)
 
 def insertionVideos(catalog):
-    
     model.insertionVideos(catalog)   
 
 def shellVideos(catalog):
-    
     model.shellVideos(catalog)       
     
 def quickVideos(catalog):
-
     model.quickVideos(catalog)
 
 def mergeVideos(catalog):
-
     model.mergeVideos(catalog)        
+
 # Funciones de consulta sobre el catálogo
 
 def getVideosByCategory(catalog, categoria):
